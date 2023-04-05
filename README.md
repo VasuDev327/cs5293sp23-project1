@@ -43,9 +43,6 @@ After that as the output is the object format: It looks as follows:
 
 Its format is the name of the file, followed by that it has the count, values in the form of list[(name/date/gender/phone/address, start_index, end_index)]
 
-I also did the testing which was successful for all the test runs. The output is shown as below:
-![image](https://user-images.githubusercontent.com/102677891/229964100-f226f781-cc13-44c2-9cd7-0ac82dc0d9f8.png)
-
 ## Video recording
 I have added the video file under the name **pipenv run output video.mp4** which shows the run of this code(redactor.py)
 
@@ -63,3 +60,6 @@ genders = ["he", "him", "his", "she", "her", "hers", "father", "mother", "girl",
 
 ## test.py
 Instead of individual modules, I have added all the functions in the same test file.
+
+Here is the testing result which was successful for all the test runs. The output is shown as below:
+![image](https://user-images.githubusercontent.com/102677891/229964100-f226f781-cc13-44c2-9cd7-0ac82dc0d9f8.png)
