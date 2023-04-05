@@ -68,8 +68,7 @@ def spacy_function(arguments):
             # redact address
             redacted_text = redact_address_fun(redacted_text, doc, file_tracker, text)
         
-        filename_without_extension = file[:-4]
-        new_filename = output / f"{filename_without_extension}.redacted"
+        new_filename = output / f"{file}.redacted"
         with open(new_filename, "w", encoding="utf-8") as f:
             f.write(redacted_text)
 
