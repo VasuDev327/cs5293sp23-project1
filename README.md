@@ -59,7 +59,11 @@ genders = ["he", "him", "his", "she", "her", "hers", "father", "mother", "girl",
 **The files folder is the output file folder where the redacted format will be available.**
 
 ## test.py
-Instead of individual modules, I have added all the functions in the same test file.
+Instead of individual modules, I have added all the functions in the same test file, as follows:
+![image](https://user-images.githubusercontent.com/102677891/229971473-d8d355fb-6d75-49d6-b89d-223118f9ba81.png)
+![image](https://user-images.githubusercontent.com/102677891/229971498-41ac9438-8f22-49cc-87ad-8ec180371685.png)
+![image](https://user-images.githubusercontent.com/102677891/229971516-f3adfedd-d6f7-4c7a-8d39-42f395d95d1f.png)
+![image](https://user-images.githubusercontent.com/102677891/229971547-8880b607-b59e-43fa-836d-d39c5ac28974.png)
 
 Here is the testing result which was successful for all the test runs. The output is shown as below:
 ![image](https://user-images.githubusercontent.com/102677891/229964100-f226f781-cc13-44c2-9cd7-0ac82dc0d9f8.png)
