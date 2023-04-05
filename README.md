@@ -57,3 +57,6 @@ Despite its usefulness, Spacy's precision may not be sufficient for certain task
 genders = ["he", "him", "his", "she", "her", "hers", "father", "mother", "girl", "boy", "man", "woman",
                 "male", "female", "sister", "brother", "men", "women"]
 ```
+
+**1.txt, 2.txt, 5.txt, 6.txt, 7.txt are the inputfiles I have used in this code.**
+**The files folder is the output file folder where the redacted format will be available.**
