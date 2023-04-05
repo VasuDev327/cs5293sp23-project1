@@ -1,0 +1,5 @@
+spacy Documentation | https://spacy.io/usage | This website helped me to install spacy
+spacy Youtube tutorial | https://www.youtube.com/watch?v=mzppRSf7gSM&t=433s | to understand the spacy options
+regex commands Documentation | https://www.regular-expressions.info/quickstart.html | Along with the lectures, I used this website to understand more about the regular expressions to get the basic patterns
+glob | https://docs.python.org/3/library/glob.html | to set the path for the output
+I did used stackoverflow, where I understood the logic but I have not used that code, instead I have followed their approach, to implement my logic.
