@@ -32,3 +32,22 @@ In the main method, we extract the argument parsers to obtain the necessary para
    
 Starting from this point, I have constructed separate code blocks, which will be executed based on the corresponding command line inputs.
 In each block, for each text file, the redacted data information will be collected in the form of object.
+I have used spacy module for the function blocks *names, genders, address* and regular expression for remaining function blocks.
+
+Used the following command to run the code
+![image](https://user-images.githubusercontent.com/102677891/229963600-9e045a49-103e-4ccd-9a92-8745c09941c0.png)
+
+# Stats output
+After that as the output is the object format: It looks as follows:
+![image](https://user-images.githubusercontent.com/102677891/229963677-26730dac-b84e-45eb-b697-dd7ec697dc9c.png)
+
+Its format is the name of the file, followed by that it has the count, values in the form of list[(name/date/gender/phone/address, start_index, end_index)]
+
+I also did the testing which was successful for all the test runs. The output is shown as below:
+![image](https://user-images.githubusercontent.com/102677891/229964100-f226f781-cc13-44c2-9cd7-0ac82dc0d9f8.png)
+
+## Video recording
+I have added the video file which shows the run of this code(redactor.py)
+
+## Bug:
+Despite its usefulness, Spacy's precision may not be sufficient for certain tasks. To overcome this, I have incorporated regular expressions in my code. However, even with this approach, I am still encountering issues with partial matches in addresses. To tackle this challenge, I have utilized both Spacy's GEO and ADDRESS modules, as well as the re module to identify ZIP codes.
