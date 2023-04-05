@@ -43,17 +43,27 @@ After that as the output is the object format: It looks as follows:
 
 Its format is the name of the file, followed by that it has the count, values in the form of list[(name/date/gender/phone/address, start_index, end_index)]
 
-I also did the testing which was successful for all the test runs. The output is shown as below:
-![image](https://user-images.githubusercontent.com/102677891/229964100-f226f781-cc13-44c2-9cd7-0ac82dc0d9f8.png)
-
 ## Video recording
-I have added the video file under the **docs** which shows the run of this code(redactor.py)
+I have added the video file under the name **pipenv run output video.mp4** which shows the run of this code(redactor.py)
 
 ## Bug:
-Despite its usefulness, Spacy's precision may not be sufficient for certain tasks. To overcome this, I have incorporated regular expressions in my code. However, even with this approach, I am still encountering issues with partial matches in addresses. To tackle this challenge, I have utilized both Spacy's GEO and ADDRESS modules, as well as the re module to identify ZIP codes.
+Despite its usefulness, Spacy's precision may not be sufficient for certain tasks. To overcome this, I have incorporated regular expressions in my code. However, even with this approach, I am still encountering issues with partial matches in addresses. To tackle this challenge, I have utilized both Spacy's GPE and ADDRESS modules, as well as the re module to identify ZIP codes.
 
 ## Assumptions:
 ```
 genders = ["he", "him", "his", "she", "her", "hers", "father", "mother", "girl", "boy", "man", "woman",
                 "male", "female", "sister", "brother", "men", "women"]
 ```
+
+**1.txt, 2.txt, 5.txt, 6.txt, 7.txt are the inputfiles I have used in this code.**
+**The files folder is the output file folder where the redacted format will be available.**
+
+## test.py
+Instead of individual modules, I have added all the functions in the same test file, as follows:
+![image](https://user-images.githubusercontent.com/102677891/229971473-d8d355fb-6d75-49d6-b89d-223118f9ba81.png)
+![image](https://user-images.githubusercontent.com/102677891/229971498-41ac9438-8f22-49cc-87ad-8ec180371685.png)
+![image](https://user-images.githubusercontent.com/102677891/229971516-f3adfedd-d6f7-4c7a-8d39-42f395d95d1f.png)
+![image](https://user-images.githubusercontent.com/102677891/229971547-8880b607-b59e-43fa-836d-d39c5ac28974.png)
+
+Here is the testing result which was successful for all the test runs. The output is shown as below:
+![image](https://user-images.githubusercontent.com/102677891/229964100-f226f781-cc13-44c2-9cd7-0ac82dc0d9f8.png)
