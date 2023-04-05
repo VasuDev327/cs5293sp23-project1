@@ -47,7 +47,7 @@ I also did the testing which was successful for all the test runs. The output is
 ![image](https://user-images.githubusercontent.com/102677891/229964100-f226f781-cc13-44c2-9cd7-0ac82dc0d9f8.png)
 
 ## Video recording
-I have added the video file which shows the run of this code(redactor.py)
+I have added the video file under the **docs** which shows the run of this code(redactor.py)
 
 ## Bug:
 Despite its usefulness, Spacy's precision may not be sufficient for certain tasks. To overcome this, I have incorporated regular expressions in my code. However, even with this approach, I am still encountering issues with partial matches in addresses. To tackle this challenge, I have utilized both Spacy's GEO and ADDRESS modules, as well as the re module to identify ZIP codes.
