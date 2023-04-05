@@ -60,3 +60,6 @@ genders = ["he", "him", "his", "she", "her", "hers", "father", "mother", "girl",
 
 **1.txt, 2.txt, 5.txt, 6.txt, 7.txt are the inputfiles I have used in this code.**
 **The files folder is the output file folder where the redacted format will be available.**
+
+## test.py
+Instead of individual modules, I have added all the functions in the same test file.
