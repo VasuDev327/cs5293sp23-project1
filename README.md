@@ -47,7 +47,7 @@ Its format is the name of the file, followed by that it has the count, values in
 I have added the video file under the name **pipenv run output video.mp4** which shows the run of this code(redactor.py)
 
 ## Bug:
-Despite its usefulness, Spacy's precision may not be sufficient for certain tasks. To overcome this, I have incorporated regular expressions in my code. However, even with this approach, I am still encountering issues with partial matches in addresses. To tackle this challenge, I have utilized both Spacy's GEO and ADDRESS modules, as well as the re module to identify ZIP codes.
+Despite its usefulness, Spacy's precision may not be sufficient for certain tasks. To overcome this, I have incorporated regular expressions in my code. However, even with this approach, I am still encountering issues with partial matches in addresses. To tackle this challenge, I have utilized both Spacy's GPE and ADDRESS modules, as well as the re module to identify ZIP codes.
 
 ## Assumptions:
 ```
