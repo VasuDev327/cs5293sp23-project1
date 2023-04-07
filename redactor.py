@@ -9,6 +9,7 @@ import glob
 import sys
 from pathlib import Path
 import json
+import pyap
 
 # spacy function where every arguments are passed
 
@@ -66,7 +67,7 @@ def spacy_function(arguments):
         # address
         if redact_address:
             # redact address
-            redacted_text = redact_address_fun(redacted_text, doc, file_tracker, text)
+            redacted_text = redact_address_fun(redacted_text, file_tracker)
         
         new_filename = output / f"{file}.redacted"
         with open(new_filename, "w", encoding="utf-8") as f:
@@ -94,20 +95,31 @@ def redact_names_fun(redacted_text, doc, file_tracker):
         "values": []
     }
     persons = [ent for ent in doc.ents if ent.label_ == "PERSON"]
-    for person in persons:
-        first_name = ""
-        last_name = ""
-        for token in person:
-            if token.is_alpha:
-                redacted_text = redacted_text[:token.idx] + \
-                        "\u2588" * len(token.text) + redacted_text[token.idx+len(token.text):]
+    updated_persons = []
+    for p in persons:
+        str_conversion = str(p)
+        special_characters = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '?', '/', '<', '>', ':', '"', '[', ']', '-', '+', '=', '`', '~', ';']
+        for char in str_conversion:
+            if char in special_characters:
+                updated_persons.append(p)
+                char_idx = str_conversion.index(char)
+                person_idx = redacted_text.find(str_conversion)
                 file_tracker["names"]["count"] += 1
                 file_tracker["names"]["values"].append(
-                    (token.text, token.idx, token.idx+len(token.text))
-                )
-
-                if first_name:
-                    break
+                    (redacted_text[person_idx:char_idx], person_idx, person_idx+char_idx)
+                    )
+                redacted_text = redacted_text[:person_idx] + "\u2588" * len(str_conversion[:char_idx]) + redacted_text[char_idx+person_idx:]
+                
+                break
+    persons = [item for item in persons if item not in updated_persons]
+    for p in persons:
+        str_conversion = str(p)
+        person_idx = redacted_text.find(str_conversion)
+        file_tracker["names"]["count"] += 1
+        file_tracker["names"]["values"].append(
+            (redacted_text[person_idx:person_idx+len(str_conversion)], person_idx, person_idx+len(str_conversion))
+            )
+        redacted_text = redacted_text[:person_idx] + "\u2588" * len(str_conversion) + redacted_text[len(str_conversion)+person_idx:]
     return(redacted_text)
 
 # function for genders
@@ -174,42 +186,20 @@ def redact_phone_fun(redacted_text, text, file_tracker):
     return(redacted_text)
 
 # function for address
-def redact_address_fun(redacted_text, doc, file_tracker, text):
+def redact_address_fun(redacted_text, file_tracker):
     file_tracker["address"] = {
                 "count": 0,
                 "values": []
     }
-    for ent in doc.ents:
-        if ent.label_ == "GPE":
-            start_index = text.find(ent.text)
-            end_index = start_index+len(ent.text)
-            file_tracker["address"]["count"] += 1
-            file_tracker["address"]["values"].append(
-                (ent.text, start_index, end_index)
-            )
-            redacted_text = redacted_text.replace(ent.text, "\u2588" * len(ent.text)) 
-    
-    for ent in doc.ents:
-        if ent.label_ == "ADDRESS":
-            start_index = text.find(ent.text)
-            end_index = start_index+len(ent.text)
-            file_tracker["address"]["count"] += 1
-            file_tracker["address"]["values"].append(
-                (ent.text, start_index, end_index)
-            )
-            redacted_text = redacted_text.replace(ent.text, "\u2588" * len(ent.text))
-    
-    zipcode_pattern = r"^\d{5}|\b\d{5}\b|\d{5}$"
-    find_pattern = re.findall(zipcode_pattern, text)
-    for p in find_pattern:
-        start_index = text.find(p)
-        end_index = start_index+len(p)
-        file_tracker["address"]["count"] += 1
-        file_tracker["address"]["values"].append(
-            (p, start_index, end_index)
-        )
-        redacted_text = redacted_text.replace(p, "\u2588" * len(p))
-    return(redacted_text)
+    addresses = pyap.parse(redacted_text, country='US')
+
+    for address in addresses:
+        address_conversion = str(address)
+        address_idx = redacted_text.find(address_conversion)
+        end_idx = address_idx + len(address_conversion)
+        number_of_characters_redacted = end_idx - address_idx
+        redacted_text = redacted_text[:address_idx] + '\u2588' * len(address_conversion) + redacted_text[end_idx:]
+    return (redacted_text)
 
 
 # main function
