@@ -20,13 +20,12 @@ def test_redact_names_fun(nlp):
     file_tracker = {}
 
     # Act
-    # breakpoint()
     res = redact_names_fun(inp_text, doc, file_tracker)
 
     # Assert
     assert isinstance(res, str)
-    assert file_tracker["names"]["count"] == 4
-    assert res == 'My name is ████ ████ █████ ████████.'
+    assert file_tracker["names"]["count"] == 1
+    assert res == 'My name is ████████████████████████.'
 
 def test_redact_date_fun():
     # Arrange
@@ -34,7 +33,6 @@ def test_redact_date_fun():
     file_tracker = {}
 
     # Act
-    # breakpoint()
     res = redact_date_fun(inp_text, inp_text, file_tracker)
 
     # Assert
@@ -47,8 +45,6 @@ def test_redact_genders_fun(nlp):
     inp_text = "There is guy called Ravana. He was a king for Srilanka"
     file_tracker = {}
     doc = nlp(inp_text)
-    # Act
-    # breakpoint()
     res = redact_genders_fun(inp_text, doc, file_tracker)
 
     # Assert
@@ -61,18 +57,15 @@ def test_redact_phone_fun():
     file_tracker = {}
 
     res = redact_phone_fun(inp_text, inp_text, file_tracker)
-    # breakpoint()
     assert isinstance(res, str)
     assert res == 'Our office number is ████████████. Alternate number is █████████████'
     assert file_tracker["phones"]["count"] == 2
 
-def test_redact_address_fun(nlp):
-    inp_text = "My company is in Newyork, US, 72134"
+def test_redact_address_fun():
+    inp_text = "My address is 2200 Classen Blvd, Norman, OK, 73071"
     file_tracker = {}
-    doc = nlp(inp_text)
 
-    res = redact_address_fun(inp_text, doc, file_tracker, inp_text)
-    # breakpoint()
+    res = redact_address_fun(inp_text, file_tracker)
     assert isinstance(res, str)
-    assert res == 'My company is in ███████, ██, █████'
-    assert file_tracker["address"]["count"] == 3
+    assert res == 'My address is ████████████████████████████████████'
+    assert file_tracker["address"]["count"] == 1

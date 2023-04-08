@@ -32,7 +32,7 @@ def spacy_function(arguments):
     # reading the .txt files one after the other
     for file in txt_files:
         file_tracker = {
-            "name": file
+            "file name": file
         }
 
         # opening the file
@@ -44,6 +44,12 @@ def spacy_function(arguments):
             print(f"This file {f} cannot be read")
         
         redacted_text = text
+
+        # address
+        if redact_address:
+            # redact address
+            redacted_text = redact_address_fun(redacted_text, file_tracker)
+
         if redact_name:
             # redact names
             redacted_text = redact_names_fun(redacted_text, doc, file_tracker)
@@ -58,17 +64,11 @@ def spacy_function(arguments):
             # redact dates
             redacted_text = redact_date_fun(redacted_text, text, file_tracker)
             
-        
         # phone numbers
         if redact_phone:
             # redact phone numbers
             redacted_text = redact_phone_fun(redacted_text, text, file_tracker)
 
-        # address
-        if redact_address:
-            # redact address
-            redacted_text = redact_address_fun(redacted_text, file_tracker)
-        
         new_filename = output / f"{file}.redacted"
         with open(new_filename, "w", encoding="utf-8") as f:
             f.write(redacted_text)
@@ -76,16 +76,85 @@ def spacy_function(arguments):
         tracker.append(file_tracker)
 
     # stats
-    stats_formatted = tracker # using tracker variable
-    
+    # stats_formatted = tracker # using tracker variable
+    # for track in tracker:
+    #     print("file name: ", track["file name"])
+    #     print("------------NAMES-----------------")
+    #     print("Number of names: ",track["names"]["count"])
+    #     for n in track["names"]["values"]:
+    #         print("Name:        ", n[0])
+    #         print("start index: ", n[1])
+    #         print("end index:   ", n[2])
+    #     print("------------DATES-----------------")
+    #     print("Number of dates: ",track["dates"]["count"])
+    #     for d in track["dates"]["values"]:
+    #         print("Date:        ", d[0])
+    #         print("start index: ", d[1])
+    #         print("end index:   ", d[2])
+    #     print("------------PHONES-----------------")
+    #     print("Number of phone numbers: ",track["phones"]["count"])
+    #     for p in track["phones"]["values"]:
+    #         print("Phone number: ", p[0])
+    #         print("start index:  ", p[1])
+    #         print("end index:    ", p[2])
+    #     print("------------GENDERS-----------------")
+    #     print("Number of names: ",track["genders"]["count"])
+    #     for g in track["genders"]["values"]:
+    #         print("Gender:      ", g[0])
+    #         print("start index: ", g[1])
+    #         print("end index:   ", g[2])
+    #     print("-------------ADDRESS-----------------")
+    #     print("Number of addresses found: ",track["address"]["count"])
+    #     for a in track["address"]["values"]:
+    #         print("Address:     ", a[0])
+    #         print("start index: ", a[1])
+    #         print("end index:   ", a[2])
+    #     print()
+    #     print("--+++++++++---NEW FILE----+++++++++---")
+    #     print()
+    output_str = ""
+    for track in tracker:
+        output_str += "file name: " + str(track["file name"]) + "\n"
+        output_str += "------------NAMES-----------------\n"
+        output_str += "Number of names: " + str(track["names"]["count"]) + "\n"
+        for n in track["names"]["values"]:
+            output_str += "Name:        " + str(n[0]) + "\n"
+            output_str += "start index: " + str(n[1]) + "\n"
+            output_str += "end index:   " + str(n[2]) + "\n"
+        output_str += "------------DATES-----------------\n"
+        output_str += "Number of dates: " + str(track["dates"]["count"]) + "\n"
+        for d in track["dates"]["values"]:
+            output_str += "Date:        " + str(d[0]) + "\n"
+            output_str += "start index: " + str(d[1]) + "\n"
+            output_str += "end index:   " + str(d[2]) + "\n"
+        output_str += "------------PHONES-----------------\n"
+        output_str += "Number of phone numbers: " + str(track["phones"]["count"]) + "\n"
+        for p in track["phones"]["values"]:
+            output_str += "Phone number: " + str(p[0]) + "\n"
+            output_str += "start index:  " + str(p[1]) + "\n"
+            output_str += "end index:    " + str(p[2]) + "\n"
+        output_str += "------------GENDERS-----------------\n"
+        output_str += "Number of genders: " + str(track["genders"]["count"]) + "\n"
+        for g in track["genders"]["values"]:
+            output_str += "Gender:      " + str(g[0]) + "\n"
+            output_str += "start index: " + str(g[1]) + "\n"
+            output_str += "end index:   " + str(g[2]) + "\n"
+        output_str += "-------------ADDRESS-----------------\n"
+        output_str += "Number of addresses found: " + str(track["address"]["count"]) + "\n"
+        for a in track["address"]["values"]:
+            output_str += "Address:     " + str(a[0]) + "\n"
+            output_str += "start index: " + str(a[1]) + "\n"
+            output_str += "end index:   " + str(a[2]) + "\n"
+        output_str += "\n--+++++++++---NEW FILE----+++++++++---\n\n"
+    # print(output_str)
+
     if stats_out == "stderr":
-        print(stats_formatted, file=sys.stderr)
-    if stats_out == "stdout":
-        print(stats_formatted, file=sys.stdout)
+        print(output_str, file=sys.stderr)
+    elif stats_out == "stdout":
+        print(output_str, file=sys.stdout)
     else:
         with open(stats_out, "a") as f:
-            f.write(json.dumps(stats_formatted))
-            f.write("\n")
+            f.write(output_str)
 
 # function for the names
 
@@ -106,7 +175,7 @@ def redact_names_fun(redacted_text, doc, file_tracker):
                 person_idx = redacted_text.find(str_conversion)
                 file_tracker["names"]["count"] += 1
                 file_tracker["names"]["values"].append(
-                    (redacted_text[person_idx:char_idx], person_idx, person_idx+char_idx)
+                    (redacted_text[person_idx:person_idx+char_idx], person_idx, person_idx+char_idx)
                     )
                 redacted_text = redacted_text[:person_idx] + "\u2588" * len(str_conversion[:char_idx]) + redacted_text[char_idx+person_idx:]
                 
@@ -197,8 +266,13 @@ def redact_address_fun(redacted_text, file_tracker):
         address_conversion = str(address)
         address_idx = redacted_text.find(address_conversion)
         end_idx = address_idx + len(address_conversion)
-        number_of_characters_redacted = end_idx - address_idx
+        # number_of_characters_redacted = end_idx - address_idx
+        file_tracker["address"]["count"] += 1
+        file_tracker["address"]["values"].append(
+            (address_conversion, address_idx, end_idx)
+        )
         redacted_text = redacted_text[:address_idx] + '\u2588' * len(address_conversion) + redacted_text[end_idx:]
+        
     return (redacted_text)
 
 
