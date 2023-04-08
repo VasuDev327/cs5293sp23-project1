@@ -13,6 +13,7 @@
   import sys
   from pathlib import Path
   import json
+  import pyap
 ```
 
 In the main method, we extract the argument parsers to obtain the necessary parameters, which include input, names, dates, genders, phone numbers, and addresses.
@@ -38,16 +39,23 @@ Used the following command to run the code
 ![image](https://user-images.githubusercontent.com/102677891/229963600-9e045a49-103e-4ccd-9a92-8745c09941c0.png)
 
 # Stats output
-After that as the output is the object format: It looks as follows:
-![image](https://user-images.githubusercontent.com/102677891/229963677-26730dac-b84e-45eb-b697-dd7ec697dc9c.png)
+After that as the output is the object format: It looks as follows:(Sample output)  
+![image](https://user-images.githubusercontent.com/102677891/230695957-cd56616e-7c3f-47ab-a6d4-a4c2a6668cff.png)
+
+![image](https://user-images.githubusercontent.com/102677891/230695964-f61f90a0-47eb-4eff-87d0-9210b32f013a.png)
+![image](https://user-images.githubusercontent.com/102677891/230695968-99cb3877-645d-4405-aa39-d1be369e1d2d.png)
+
 
 Its format is the name of the file, followed by that it has the count, values in the form of list[(name/date/gender/phone/address, start_index, end_index)]
 
 ## Video recording
-I have added the video file under the name **pipenv run output video.mp4** which shows the run of this code(redactor.py)
+I have added the video file under the name **doc** folder which shows the run of this code(redactor.py)
+Also included the test.py unittest cases test run video
 
 ## Bug:
-Despite its usefulness, Spacy's precision may not be sufficient for certain tasks. To overcome this, I have incorporated regular expressions in my code. However, even with this approach, I am still encountering issues with partial matches in addresses. To tackle this challenge, I have utilized both Spacy's GPE and ADDRESS modules, as well as the re module to identify ZIP codes.
+1. Despite its usefulness, Spacy's precision may not be sufficient for certain tasks. To overcome this, I have incorporated regular expressions in my code. However, even with this approach, I am still encountering issues with partial matches.
+
+2. I utilized the pyap module to identify the address in the provided text. When displaying the results, I am solely focusing on the address component. The reason for this is because when I incorporated "Norman" as part of the address, it was mistakenly identified as a name when name recognition was executed first. To prevent this issue, I prioritized running the address recognition component prior to other arguments.
 
 ## Assumptions:
 ```
@@ -60,10 +68,10 @@ genders = ["he", "him", "his", "she", "her", "hers", "father", "mother", "girl",
 
 ## test.py
 Instead of individual modules, I have added all the functions in the same test file, as follows:
-![image](https://user-images.githubusercontent.com/102677891/229971473-d8d355fb-6d75-49d6-b89d-223118f9ba81.png)
-![image](https://user-images.githubusercontent.com/102677891/229971498-41ac9438-8f22-49cc-87ad-8ec180371685.png)
-![image](https://user-images.githubusercontent.com/102677891/229971516-f3adfedd-d6f7-4c7a-8d39-42f395d95d1f.png)
-![image](https://user-images.githubusercontent.com/102677891/229971547-8880b607-b59e-43fa-836d-d39c5ac28974.png)
+![image](https://user-images.githubusercontent.com/102677891/230696107-53305f92-f57c-4ab2-9193-4751b299cce7.png)
+![image](https://user-images.githubusercontent.com/102677891/230696123-632e212e-034d-4ad7-bcaa-dbf9c2def22a.png)
+
 
 Here is the testing result which was successful for all the test runs. The output is shown as below:
-![image](https://user-images.githubusercontent.com/102677891/229964100-f226f781-cc13-44c2-9cd7-0ac82dc0d9f8.png)
+![image](https://user-images.githubusercontent.com/102677891/230695919-5698cca7-5dd9-4461-988c-eb004e43e674.png)
+
